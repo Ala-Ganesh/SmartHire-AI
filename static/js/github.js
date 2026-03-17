@@ -1,4 +1,4 @@
-const username = "YOUR_GITHUB_USERNAME"
+const username = "Ala-Ganesh"
 
 fetch(`https://api.github.com/users/${username}`)
 .then(res => res.json())
@@ -14,7 +14,7 @@ document.getElementById("profile").innerHTML = `
 
 })
 
-fetch(`https://api.github.com/users/${Ala-Ganesh}/repos`)
+fetch(`https://api.github.com/users/$Ala-Ganesh/repos`)
 .then(res => res.json())
 .then(repos => {
 
@@ -24,23 +24,13 @@ repos.slice(0,6).forEach(repo => {
 
 repoHTML += `
 <div class="col-md-4 mb-3">
-
 <div class="card">
-
 <div class="card-body">
-
 <h5>${repo.name}</h5>
-
 <p>${repo.description || "No description"}</p>
-
-<a href="${repo.html_url}" target="_blank" class="btn btn-primary">
-View Repo
-</a>
-
+<a href="${repo.html_url}" target="_blank" class="btn btn-primary">View Repo</a>
 </div>
-
 </div>
-
 </div>
 `
 

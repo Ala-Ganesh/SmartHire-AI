@@ -1,8 +1,3 @@
-function scrollChat(){
-let chatbox = document.getElementById("chatbox")
-chatbox.scrollTop = chatbox.scrollHeight
-}
-
 function sendMessage(){
 
 let input = document.getElementById("userInput").value
@@ -13,18 +8,15 @@ let chatbox = document.getElementById("chatbox")
 
 chatbox.innerHTML += `<div class="user-message">${input}</div>`
 
-scrollChat()
-
 document.getElementById("userInput").value=""
 
 chatbox.innerHTML += `<div class="ai-message" id="typing">AI is typing...</div>`
 
-scrollChat()
+chatbox.scrollTop = chatbox.scrollHeight
 
 fetch("/ask",{
 
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
@@ -41,32 +33,26 @@ document.getElementById("typing").remove()
 
 chatbox.innerHTML += `<div class="ai-message">${data.reply}</div>`
 
-scrollChat()
+chatbox.scrollTop = chatbox.scrollHeight
 
-})
-
-.catch(error=>{
-console.log(error)
 })
 
 }
 
 function askFAQ(question){
-
 document.getElementById("userInput").value = question
-
 sendMessage()
-
 }
+
+document.addEventListener("DOMContentLoaded", function(){
 
 document.getElementById("userInput").addEventListener("keypress",function(event){
 
 if(event.key==="Enter"){
-
 event.preventDefault()
-
 sendMessage()
-
 }
+
+})
 
 })

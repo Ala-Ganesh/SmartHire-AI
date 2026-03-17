@@ -28,14 +28,12 @@ Ala Ganesh is a final-year B.Tech Computer Science student specializing in Data 
 His current CGPA is 7.54.
 
 He comes from a small farming family in Palnadu, Andhra Pradesh.
-His parents work as farmers on a 2-acre agricultural land and sometimes work as labourers
-to support the family during difficult times.
+His parents work as farmers on a 2-acre agricultural land.
 
 Ala Ganesh is the first graduate in his family. His parents believe that his education
 will transform their family’s future.
 
-He has a sister who discontinued her studies after Class 12, and his family is currently
-looking for a suitable marriage for her.
+He has a sister who discontinued her studies after Class 12.
 
 During his academic journey, Ala Ganesh developed a project called NutriSnap.
 NutriSnap is an AI-based food recognition and nutritional value estimation system
@@ -62,6 +60,18 @@ def ask():
     reply = get_ai_response(message)
 
     return jsonify({"reply": reply})
+
+@app.route("/project/nutrisnap")
+def nutrisnap():
+    return render_template("nutrisnap.html")
+
+@app.route("/project/smarthire")
+def smarthire():
+    return render_template("smarthire.html")
+
+@app.route("/project/billsmart")
+def billsmart():
+    return render_template("billsmart.html")
 
 import os
 
