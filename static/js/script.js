@@ -25,6 +25,16 @@ max:100
 })
 
 }
+window.addEventListener("scroll", function(){
+let navbar = document.querySelector(".navbar");
+
+if(window.scrollY > 10){
+navbar.style.boxShadow = "0 4px 15px rgba(0,0,0,0.3)";
+}else{
+navbar.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
+}
+});
+
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => {
     let navbar = document.querySelector('.navbar-collapse');
