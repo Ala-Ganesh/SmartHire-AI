@@ -54,3 +54,16 @@ transition:0.3s;
 body{
 padding-bottom:60px;
 }
+body{
+padding-bottom:70px;
+}
+h1, h2, h3, h4 {
+word-wrap: break-word;
+}
+
+p {
+font-size: 14px;
+}
+.nav-link i{
+margin-right:6px;
+}
