@@ -18,7 +18,7 @@ def get_ai_response(message):
     # ===== FAMILY =====
     elif "family" in msg:
         return ("He comes from a farming family in Palnadu, Andhra Pradesh. "
-                "His parents work on a 2-acre agricultural land. He is the first graduate in his family.")
+                "He is the first graduate in his family.")
 
     # ===== PROJECT =====
     elif "nutrisnap" in msg:
@@ -37,7 +37,7 @@ def get_ai_response(message):
 
     # ===== EXPERIENCE =====
     elif "experience" in msg or "work" in msg:
-        return ("He has part-time work experience at Valam Organic Restaurant, where he developed "
+        return ("He has part-time work experience at Valam Organics , where he developed "
                 "teamwork, communication, and responsibility skills.")
 
     # ===== DEFAULT =====
