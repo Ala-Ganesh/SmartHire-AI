@@ -347,12 +347,3 @@ background: linear-gradient(135deg, #ede9fe, #ddd6fe);
 
 background: rgba(255,255,255,0.2);
 backdrop-filter: blur(10px);
-
-.nav-link i{
-color:#38bdf8;
-transition:0.3s;
-}
-
-.nav-link:hover i{
-transform: scale(1.2);
-}
