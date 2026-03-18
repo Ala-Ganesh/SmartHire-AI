@@ -1,58 +1,82 @@
 function sendMessage(){
 
-let input = document.getElementById("userInput").value
+    let input = document.getElementById("userInput");
+    let message = input.value.trim();
 
-if(input.trim()==="") return
+    if(message === "") return;
 
-let chatbox = document.getElementById("chatbox")
+    addMessage(message, "user");
 
-chatbox.innerHTML += `<div class="user-message">${input}</div>`
+    input.value = "";
 
-document.getElementById("userInput").value=""
+    // Show typing animation
+    let typingDiv = document.createElement("div");
+    typingDiv.className = "chat-message ai typing";
+    typingDiv.id = "typing";
 
-chatbox.innerHTML += `<div class="ai-message" id="typing">AI is typing...</div>`
+    typingDiv.innerHTML = `
+        <img src="/static/images/profile.jpg" class="chat-avatar">
+        <div class="chat-bubble">Typing...</div>
+    `;
 
-chatbox.scrollTop = chatbox.scrollHeight
+    document.getElementById("chatbox").appendChild(typingDiv);
 
-fetch("/ask",{
+    scrollChat();
 
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
+    fetch("/ask", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({message: message})
+    })
+    .then(res => res.json())
+    .then(data => {
 
-body:JSON.stringify({message:input})
+        // Remove typing
+        document.getElementById("typing").remove();
 
-})
-
-.then(res=>res.json())
-
-.then(data=>{
-
-document.getElementById("typing").remove()
-
-chatbox.innerHTML += `<div class="ai-message">${data.reply}</div>`
-
-chatbox.scrollTop = chatbox.scrollHeight
-
-})
-
+        addMessage(data.reply, "ai");
+    });
 }
 
+
+function addMessage(text, sender){
+
+    let messageDiv = document.createElement("div");
+    messageDiv.className = "chat-message " + sender;
+
+    if(sender === "user"){
+        messageDiv.innerHTML = `
+            <div class="chat-bubble">${text}</div>
+        `;
+    }
+    else{
+        messageDiv.innerHTML = `
+            <img src="/static/images/profile.jpg" class="chat-avatar">
+            <div class="chat-bubble">${text}</div>
+        `;
+    }
+
+    document.getElementById("chatbox").appendChild(messageDiv);
+
+    scrollChat();
+}
+
+function scrollChat(){
+    let chatbox = document.getElementById("chatbox");
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+// Enter key support
+document.getElementById("userInput").addEventListener("keypress", function(e){
+    if(e.key === "Enter"){
+        sendMessage();
+    }
+});
+
+// FAQ buttons
 function askFAQ(question){
-document.getElementById("userInput").value = question
-sendMessage()
+    document.getElementById("userInput").value = question;
+    sendMessage();
 }
-
-document.addEventListener("DOMContentLoaded", function(){
-
-document.getElementById("userInput").addEventListener("keypress",function(event){
-
-if(event.key==="Enter"){
-event.preventDefault()
-sendMessage()
-}
-
-})
-
-})

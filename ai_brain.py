@@ -1,66 +1,46 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+def get_ai_response(message):
 
-knowledge_base = {
+    msg = message.lower()
 
-"introduction": """
-Ala Ganesh is a final-year B.Tech Computer Science student specializing in Data Science with a CGPA of 7.54.
-He is the first graduate in his family and comes from a farming family in Palnadu, Andhra Pradesh.
-He is passionate about artificial intelligence and building useful software applications.
-""",
+    # ===== BASIC INFO =====
+    if "who is ala" in msg or "who are you" in msg:
+        return ("Ala Ganesh is a final-year B.Tech Computer Science student "
+                "specializing in Data Science and building AI-based applications.")
 
-"family": """
-He comes from a small farming family. He is the First Graduate in his Family.
-""",
+    # ===== EDUCATION =====
+    elif "education" in msg or "study" in msg or "college" in msg:
+        return ("Ala Ganesh is currently pursuing his final year B.Tech in Computer Science "
+                "with a specialization in Data Science. His current CGPA is 7.54. "
+                "Completed his Intermediate education at Narayana Junior College, Guntur with 76% "
+                "and "
+                "his schooling at SSCRP School (CBSE), Palnadu with 55%.")
 
-"education": """
-Ala Ganesh is pursuing B.Tech Computer Science with Data Science specialization.
-His academic focus includes AI, machine learning concepts, and software development.
-""",
+    # ===== FAMILY =====
+    elif "family" in msg:
+        return ("He comes from a farming family in Palnadu, Andhra Pradesh. "
+                "His parents work on a 2-acre agricultural land. He is the first graduate in his family.")
 
-"skills": """
-His skills include Python programming, Flask web development, HTML, CSS, JavaScript,
-and basic machine learning concepts.
-""",
+    # ===== PROJECT =====
+    elif "nutrisnap" in msg:
+        return ("NutriSnap is an AI-based food recognition system that detects food items "
+                "and provides nutritional information using machine learning.")
 
-"nutrisnap": """
-NutriSnap is an AI-based food recognition and nutrition estimation system.
-It detects food items from images and estimates nutritional values using machine learning.
-""",
+    # ===== SKILLS =====
+    elif "skills" in msg:
+        return ("Ala Ganesh has strong skills in Python, Machine Learning, Flask, TensorFlow, "
+                "Web Development, and Data Analysis.")
 
-"work": """
-Along with his studies, Ala Ganesh works part-time at Valam Organic Restaurant in Selaiyur.
-This experience helped him develop teamwork and communication skills.
-""",
+    # ===== CAREER =====
+    elif "career" in msg or "goal" in msg:
+        return ("His goal is to become a skilled Data Scientist and build impactful AI solutions "
+                "while supporting his family.")
 
-"goal": """
-His goal is to become a strong technology professional, build impactful AI solutions,
-and support his family financially.
-""",
+    # ===== EXPERIENCE =====
+    elif "experience" in msg or "work" in msg:
+        return ("He has part-time work experience at Valam Organic Restaurant, where he developed "
+                "teamwork, communication, and responsibility skills.")
 
-"hobbies": """
-He enjoys driving in his free time because it gives him a sense of freedom.
-"""
-
-}
-
-questions = list(knowledge_base.keys())
-answers = list(knowledge_base.values())
-
-vectorizer = TfidfVectorizer()
-X = vectorizer.fit_transform(questions)
-
-def get_ai_response(user_question):
-
-    user_vec = vectorizer.transform([user_question])
-
-    similarity = cosine_similarity(user_vec, X)
-
-    index = similarity.argmax()
-
-    score = similarity[0][index]
-
-    if score < 0.2:
-        return "I may not have information about that yet. Try asking about Ala Ganesh's skills, projects, education, or goals."
-
-    return answers[index]
+    # ===== DEFAULT =====
+    else:
+        return ("You can ask about Ala Ganesh's education, skills, projects, family background, "
+                "career goals, or experience.")
