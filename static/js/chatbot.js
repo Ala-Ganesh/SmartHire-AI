@@ -9,20 +9,20 @@ function sendMessage(){
 
     input.value = "";
 
-    // Show typing animation
+    // 🔥 Typing Animation
     let typingDiv = document.createElement("div");
-    typingDiv.className = "chat-message ai typing";
+    typingDiv.className = "message ai-message typing";
     typingDiv.id = "typing";
 
     typingDiv.innerHTML = `
-        <img src="/static/images/profile.jpg" class="chat-avatar">
-        <div class="chat-bubble">Typing...</div>
+        <img src="/static/images/profile.jpg" class="avatar">
+        <div class="bubble">Typing...</div>
     `;
 
     document.getElementById("chatbox").appendChild(typingDiv);
-
     scrollChat();
 
+    // 🔥 API CALL
     fetch("/ask", {
         method: "POST",
         headers: {
@@ -34,27 +34,32 @@ function sendMessage(){
     .then(data => {
 
         // Remove typing
-        document.getElementById("typing").remove();
+        let typing = document.getElementById("typing");
+        if(typing) typing.remove();
 
         addMessage(data.reply, "ai");
     });
 }
 
 
+// 🔥 MESSAGE HANDLER
 function addMessage(text, sender){
 
     let messageDiv = document.createElement("div");
-    messageDiv.className = "chat-message " + sender;
 
     if(sender === "user"){
+        messageDiv.className = "message user-message";
+
         messageDiv.innerHTML = `
-            <div class="chat-bubble">${text}</div>
+            <div class="bubble">${text}</div>
         `;
     }
     else{
+        messageDiv.className = "message ai-message";
+
         messageDiv.innerHTML = `
-            <img src="/static/images/profile.jpg" class="chat-avatar">
-            <div class="chat-bubble">${text}</div>
+            <img src="/static/images/profile.jpg" class="avatar">
+            <div class="bubble">${text}</div>
         `;
     }
 
@@ -63,19 +68,27 @@ function addMessage(text, sender){
     scrollChat();
 }
 
+
+// 🔥 AUTO SCROLL
 function scrollChat(){
     let chatbox = document.getElementById("chatbox");
     chatbox.scrollTop = chatbox.scrollHeight;
 }
 
-// Enter key support
-document.getElementById("userInput").addEventListener("keypress", function(e){
-    if(e.key === "Enter"){
-        sendMessage();
-    }
+
+// 🔥 ENTER KEY SUPPORT
+document.addEventListener("DOMContentLoaded", function(){
+    let input = document.getElementById("userInput");
+
+    input.addEventListener("keypress", function(e){
+        if(e.key === "Enter"){
+            sendMessage();
+        }
+    });
 });
 
-// FAQ buttons
+
+// 🔥 FAQ HANDLER
 function askFAQ(question){
     document.getElementById("userInput").value = question;
     sendMessage();

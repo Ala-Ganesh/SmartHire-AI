@@ -6,8 +6,142 @@
 <title>AI Portfolio Assistant</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+/* ===== REMOVE ALL TOP GAPS (FINAL FIX) ===== */
+html, body{
+margin:0 !important;
+padding:0 !important;
+}
+
+/* REMOVE BOOTSTRAP OFFSET ISSUE */
+.navbar{
+margin-top:0 !important;
+}
+
+/* ===== PAGE BACKGROUND ===== */
+.chat-page{
+background: linear-gradient(135deg, #1e3a8a, #2563eb);
+min-height: 100vh;
+}
+
+/* ===== CHAT CONTAINER ===== */
+.chat-container{
+max-width:700px;
+margin:15px auto;   /* reduced top gap */
+background:#ffffff;
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* ===== CHATBOX ===== */
+.chatbox{
+height:420px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+gap:10px;
+padding:10px;
+background:#f8fafc;
+border-radius:10px;
+scroll-behavior:smooth;
+}
+
+/* ===== MESSAGE BASE ===== */
+.message{
+display:flex;
+align-items:flex-end;
+gap:8px;
+}
+
+/* ===== USER (LEFT SIDE) ===== */
+.user-message{
+justify-content:flex-start;
+}
+
+.user-message .bubble{
+background:#2563eb;
+color:white;
+border-bottom-left-radius:4px;
+}
+
+/* ===== AI (RIGHT SIDE) ===== */
+.ai-message{
+justify-content:flex-end;
+flex-direction:row-reverse;
+}
+
+.ai-message .bubble{
+background:#e2e8f0;
+color:#0f172a;
+border-bottom-right-radius:4px;
+}
+
+/* ===== BUBBLE ===== */
+.bubble{
+max-width:70%;
+padding:10px 14px;
+border-radius:12px;
+font-size:14px;
+line-height:1.4;
+}
+
+/* ===== AVATAR ===== */
+.avatar{
+width:32px;
+height:32px;
+border-radius:50%;
+}
+
+/* ===== INPUT AREA ===== */
+.input-area{
+display:flex;
+margin-top:12px;
+gap:10px;
+}
+
+.input-area input{
+flex:1;
+padding:10px;
+border-radius:8px;
+border:1px solid #e2e8f0;
+outline:none;
+}
+
+.input-area input:focus{
+border-color:#2563eb;
+}
+
+/* BUTTON */
+.input-area button{
+background:#2563eb;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.input-area button:hover{
+background:#1d4ed8;
+}
+
+/* FAQ BUTTONS */
+.btn-light{
+background:#f1f5f9;
+border:none;
+}
+
+.btn-light:hover{
+background:#e2e8f0;
+}
+
+</style>
+
 </head>
 
 <body class="chat-page">
@@ -18,16 +152,15 @@
 
 <h2 class="text-center mb-3">🤖 AI Portfolio Assistant</h2>
 
-
-
-<!-- Chat Area -->
+<!-- CHAT AREA -->
 <div id="chatbox" class="chatbox">
 
-<div class="chat-message ai">
-    <img src="{{ url_for('static', filename='images/profile.jpg') }}" class="chat-avatar">
-    <div class="chat-bubble">
+<!-- INITIAL AI MESSAGE (RIGHT) -->
+<div class="message ai-message">
+    <img src="{{ url_for('static', filename='images/profile.jpg') }}" class="avatar">
+    <div class="bubble">
         Hi! I'm Ala Ganesh's AI assistant 👋<br>
-        Ask me anything about:
+        Ask me anything about:<br>
         • Education<br>
         • Skills<br>
         • Projects<br>
@@ -37,25 +170,23 @@
 
 </div>
 
-<!-- FAQ Buttons -->
-<div class="mb-3 text-center">
-
+<!-- FAQ BUTTONS -->
+<div class="text-center mt-3">
 <button class="btn btn-light btn-sm m-1" onclick="askFAQ('Who is Ala Ganesh?')">Who is Ala Ganesh?</button>
 <button class="btn btn-light btn-sm m-1" onclick="askFAQ('Tell me about your education')">Education</button>
 <button class="btn btn-light btn-sm m-1" onclick="askFAQ('Tell me about your family')">Family</button>
 <button class="btn btn-light btn-sm m-1" onclick="askFAQ('Explain NutriSnap project')">NutriSnap</button>
 <button class="btn btn-light btn-sm m-1" onclick="askFAQ('What are your skills?')">Skills</button>
 <button class="btn btn-light btn-sm m-1" onclick="askFAQ('What are your career goals?')">Career Goals</button>
-
 </div>
 
-
-<!-- Input -->
-<div class="input-group mt-3">
-<input id="userInput" type="text" class="form-control" placeholder="Ask something...">
-<button class="btn btn-primary" onclick="sendMessage()">Send</button>
+<!-- INPUT -->
+<div class="input-area">
+<input id="userInput" type="text" placeholder="Type your message...">
+<button onclick="sendMessage()">Send</button>
 </div>
 
+<!-- BACK BUTTON -->
 <div class="text-center mt-3">
 <a href="/" class="btn btn-dark btn-sm">⬅ Back Home</a>
 </div>
